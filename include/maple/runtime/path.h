@@ -13,7 +13,7 @@ Path(const std::string& path) : path_(path) {
     // 标准化路径（转换斜杠和反斜杠）
     void normalize() {
         #ifdef _WIN32
-            std::replace(m_path.begin(), m_path.end(), '/', '\\');
+        std::replace(path_.begin(), path_.end(), '/', '\\');
         #else
             std::replace(path_.begin(), path_.end(), '\\', '/');
         #endif
@@ -23,7 +23,7 @@ Path(const std::string& path) : path_(path) {
     static Path combine(const Path& path1, const Path& path2) {
         std::string combined = path1.path_;
         #ifdef _WIN32
-            combined += "\\" + path2.m_path;
+            combined += "\\" + path2.path_;
         #else
             combined += "/" + path2.path_;
         #endif
