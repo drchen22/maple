@@ -1,4 +1,5 @@
 #include "runtime/shader.hpp"
+#include <glm/gtc/type_ptr.hpp>
 
 Shader::Shader(const char* vertexPath, const char* fragmentPath) {
     std::string vertex_code;
@@ -69,8 +70,17 @@ void Shader::setFloat(const std::string &name, float value) const {
     glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
 }
 
-void Shader::setVec3f(const std::string &name, float value1, float value2, float value3) const {
-    glUniform3f(glGetUniformLocation(ID, name.c_str()), value1, value2, value3);
+void Shader::setVec3(const std::string &name, const glm::vec3 &value) const {
+    glUniform3fv(glGetUniformLocation(ID, name.c_str()), 1, &value[0]);
+}
+
+void Shader::setVec3(const std::string& name, float v1, float v2, float v3) const {
+    glUniform3f(glGetUniformLocation(ID, name.c_str()), v1, v2, v3);
+}
+
+void Shader::setMat4(const std::string& name, glm::mat4& mat) const {
+    glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE,
+                       glm::value_ptr(mat));
 }
 
 
